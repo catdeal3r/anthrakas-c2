@@ -3,11 +3,9 @@ use std::fs;
 use toml;
 
 
-pub fn get_config() -> String {
-    let filepath = "anthraka_server_conf.toml";
-    
+pub fn get_files_contents(filepath: &str) -> String {
     if !std::path::Path::exists(std::path::Path::new(&filepath)) {
-        println!("({}): `anthraka_server_conf.toml` is not found.", colored::Colorize::red("Error"));
+        println!("({}): `{}` is not found.", colored::Colorize::red("Error"), filepath);
         std::process::exit(1);
     }
 
@@ -18,8 +16,7 @@ pub fn parse_config(data: &String) -> Config {
     match toml::from_str(&data) {
         Ok(out) => out,
         Err(_) => {
-            let output = format!("({}): Malformed config file.", colored::Colorize::red("Error"));
-            println!("{}", output);
+            println!("({}): Malformed config file.", colored::Colorize::red("Error"));
             std::process::exit(1);
         }
     }
@@ -30,6 +27,18 @@ pub fn parse_post_toml(data: &String) -> (Commands, ParseError) {
         Ok(out) => (out, ParseError::None),
         Err(_) => {
             let output = format!("({}): POST request's toml is malformed.", colored::Colorize::red("Error"));
+            println!("{}", output);
+            return (Commands { key: "".to_string(), commands: vec![format!("{}\n", output)] }, ParseError::MalformedToml)
+        }
+    }
+}
+
+
+pub fn parse_commands_history_file(data: &String) -> (Commands , ParseError) {
+    match toml::from_str(&data) {
+        Ok(out) => (out, ParseError::None),
+        Err(_) => {
+            let output = format!("({}): Malformed server-internal commands file.", colored::Colorize::red("Error"));
             println!("{}", output);
             return (Commands { key: "".to_string(), commands: vec![format!("{}\n", output)] }, ParseError::MalformedToml)
         }
