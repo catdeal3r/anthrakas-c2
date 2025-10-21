@@ -1,1 +1,6 @@
 anthrakas-server/target/
+anthrakas-client/target/
+anthrakas-controller/target/
+anthrakas-server/Cargo.lock
+anthrakas-client/Cargo.lock
+anthrakas-controller/Cargo.lock
