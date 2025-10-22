@@ -4,3 +4,7 @@ anthrakas-controller/target/
 anthrakas-server/Cargo.lock
 anthrakas-client/Cargo.lock
 anthrakas-controller/Cargo.lock
+tests/testing-toml/target/
+tests/testing-toml/Cargo.lock
+tests/testing/target/
+tests/testing/Cargo.lock

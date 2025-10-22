@@ -22,41 +22,68 @@ pub fn parse_config(data: &String) -> Config {
     }
 }
 
-pub fn parse_post_toml(data: &String) -> (Commands, ParseError) {
+pub fn parse_post_toml(data: &String) -> (Clients, ParseError) {
     match toml::from_str(&data) {
         Ok(out) => (out, ParseError::None),
         Err(_) => {
             let output = format!("({}): POST request's toml is malformed.", colored::Colorize::red("Error"));
             println!("{}", output);
-            return (Commands { key: "".to_string(), commands: vec![format!("{}\n", output)] }, ParseError::MalformedToml)
+
+            let mut clients_map = HashMap::new();
+
+            let clients = Clients {
+                clients: vec![format!("{}\n", output)]
+            }
+            clients_map.insert("".to_string(), clients);
+
+            
+            let client = Client {
+                clients: clients_map
+            }
+        
+            return (client, ParseError::MalformedToml)
         }
     }
 }
 
 
-pub fn parse_commands_history_file(data: &String) -> (Commands , ParseError) {
+pub fn parse_commands_history_file(data: &String) -> (Clients, ParseError) {
     match toml::from_str(&data) {
         Ok(out) => (out, ParseError::None),
         Err(_) => {
             let output = format!("({}): Malformed server-internal commands file.", colored::Colorize::red("Error"));
             println!("{}", output);
-            return (Commands { key: "".to_string(), commands: vec![format!("{}\n", output)] }, ParseError::MalformedToml)
+
+            let mut clients_map = HashMap::new();
+
+            let clients = Clients {
+                clients: vec![format!("{}\n", output)]
+            }
+            clients_map.insert("".to_string(), clients);
+
+            
+            let client = Client {
+                clients: clients_map
+            }
+        
+            return (client, ParseError::MalformedToml)
         }
     }
 }
 
-#[derive(serde::Deserialize)]
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct Config {
-    pub master_key: String
+    pub keys: Vec<String>
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct Clients {
+    pub clients: HashMap<String, Client>
+}
 
-#[derive(serde::Deserialize)]
-#[derive(serde::Serialize)]
-pub struct Commands {
-   pub key: String,
-   pub commands: Vec<String>,
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct Client {
+    pub commands: Vec<String>
 }
 
 #[derive(PartialEq)]
