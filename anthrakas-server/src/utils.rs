@@ -1,4 +1,4 @@
-
+use std::collections::HashMap;
 use std::fs;
 use toml;
 
@@ -31,17 +31,17 @@ pub fn parse_post_toml(data: &String) -> (Clients, ParseError) {
 
             let mut clients_map = HashMap::new();
 
-            let clients = Clients {
-                clients: vec![format!("{}\n", output)]
-            }
-            clients_map.insert("".to_string(), clients);
+            let client = Client {
+                commands: vec![format!("{}\n", output)]
+            };
+            clients_map.insert("".to_string(), client);
 
             
-            let client = Client {
+            let clients = Clients {
                 clients: clients_map
-            }
+            };
         
-            return (client, ParseError::MalformedToml)
+            return (clients, ParseError::MalformedToml)
         }
     }
 }
@@ -56,17 +56,17 @@ pub fn parse_commands_history_file(data: &String) -> (Clients, ParseError) {
 
             let mut clients_map = HashMap::new();
 
-            let clients = Clients {
-                clients: vec![format!("{}\n", output)]
-            }
-            clients_map.insert("".to_string(), clients);
+            let client = Client {
+                commands: vec![format!("{}\n", output)]
+            };
+            clients_map.insert("".to_string(), client);
 
             
-            let client = Client {
+            let clients = Clients {
                 clients: clients_map
-            }
+            };
         
-            return (client, ParseError::MalformedToml)
+            return (clients, ParseError::MalformedToml)
         }
     }
 }
