@@ -1,5 +1,3 @@
 [clients.cat]
-commands = ["bangers v2", "bangers v3", "bangers v4"]
-
-[clients.dog]
-commands = ["bangers v1"]
+commands = []
+outputs = []
