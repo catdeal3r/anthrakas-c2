@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+colored = "2"
+curl = { version = "0.4.49", features = [ "ssl" ] }
+thiserror = "2.0.17"
