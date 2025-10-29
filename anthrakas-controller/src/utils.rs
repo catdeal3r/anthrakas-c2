@@ -18,7 +18,7 @@ pub fn output_line_sys(line: String) {
     println!("[{}]\n{}\n", "sys".bold().blue(), line);
 }
 
-pub fn upload_file_and_add_result_to_str(url: &String, data: &String, r_output: &mut String) {
+pub fn send_data_and_add_result_to_str(url: &String, data: &String, r_output: &mut String) {
     let mut request = Easy::new();
 
     request.url(url).unwrap();
