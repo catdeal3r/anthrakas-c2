@@ -48,7 +48,7 @@ pub fn parse_commands_history_file(data: &String) -> (Clients, ParseError) {
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct Config {
-    pub keys: Vec<String>
+    pub clients: Vec<String>
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

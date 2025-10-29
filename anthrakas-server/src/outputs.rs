@@ -5,7 +5,7 @@ use std::fs;
 
 use crate::utils;
 
-pub async fn add_outputs(data: String, keys: Vec<String>) -> String {
+pub async fn add_outputs(data: String, clients: Vec<String>) -> String {
     let (clients_and_key, parsing_error) = utils::parse_post_toml(&data);
 
     if parsing_error == utils::ParseError::MalformedToml {
@@ -16,7 +16,7 @@ pub async fn add_outputs(data: String, keys: Vec<String>) -> String {
 
     for (key, client) in &clients_and_key.clients {
     
-        if !keys.contains(&key) {
+        if !clients.contains(&key) {
             let error = format!("({}): Incorrect authentication.", colored::Colorize::red("Error"));
             println!("{}", error);
             return format!("{}\n", error)
@@ -49,8 +49,8 @@ pub async fn add_outputs(data: String, keys: Vec<String>) -> String {
     format!("{}\n", output)
 }
 
-pub async fn outputs(data: String, keys: Vec<String>) -> String {
-    if !keys.contains(&data) {
+pub async fn outputs(data: String, clients: Vec<String>) -> String {
+    if !clients.contains(&data) {
         let error = format!("({}): Incorrect authentication.", colored::Colorize::red("Error"));
         println!("{}", error);
         return format!("{}\n", error)
@@ -79,8 +79,8 @@ pub async fn outputs(data: String, keys: Vec<String>) -> String {
     }
 }
 
-pub async fn clear_outputs(data: String, keys: Vec<String>) -> String {
-    if !keys.contains(&data) {
+pub async fn clear_outputs(data: String, clients: Vec<String>) -> String {
+    if !clients.contains(&data) {
         let error = format!("({}): Incorrect authentication.", colored::Colorize::red("Error"));
         println!("{}", error);
         return format!("{}\n", error)
